@@ -5,3 +5,35 @@
 [33mThe CJS build of Vite's Node API is deprecated. See https://vite.dev/guide/troubleshooting.html#vite-cjs-node-api-deprecated for more details.[39m
   ➜  Local:   http://localhost:3000/
   ➜  Network: http://172.17.0.2:3000/
+4:53:58 AM [vite] (ssr) Error when evaluating SSR module virtual:remix/server-manifest: Transform failed with 2 errors:
+/home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/app/root.tsx:38:13: ERROR: Multiple exports with the same name "links"
+/home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/app/root.tsx:38:13: ERROR: The symbol "links" has already been declared
+  Plugin: vite:esbuild
+  File: /home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/app/root.tsx:38:13
+  
+  Multiple exports with the same name "links"
+  36 |  ];
+  37 |  
+  38 |  export const links: LinksFunction = () => [
+     |               ^
+  39 |    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  40 |    {
+  
+  The symbol "links" has already been declared
+  36 |  ];
+  37 |  
+  38 |  export const links: LinksFunction = () => [
+     |               ^
+  39 |    { rel: "preconnect", href: "https://fonts.googleapis.com" },
+  40 |    {
+  
+      at failureErrorWithLog (/home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/node_modules/vite/node_modules/esbuild/lib/main.js:1463:15)
+      at /home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/node_modules/vite/node_modules/esbuild/lib/main.js:734:50
+      at responseCallbacks.<computed> (/home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/node_modules/vite/node_modules/esbuild/lib/main.js:601:9)
+      at handleIncomingPacket (/home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/node_modules/vite/node_modules/esbuild/lib/main.js:656:12)
+      at Socket.readFromStdout (/home/kavia/workspace/code-generation/noteease-14916-c208158d/noteease/node_modules/vite/node_modules/esbuild/lib/main.js:579:7)
+      at Socket.emit (node:events:517:28)
+      at addChunk (node:internal/streams/readable:368:12)
+      at readableAddChunk (node:internal/streams/readable:341:9)
+      at Socket.Readable.push (node:internal/streams/readable:278:10)
+      at Pipe.onStreamRead (node:internal/stream_base_commons:190:23)
