@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import type { MetaFunction } from "@remix-run/node";
 import NoteCard from "~/components/NoteCard";
 import NoteForm from "~/components/NoteForm";
@@ -21,15 +21,20 @@ export default function Index() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const notesStore = NotesStore.getInstance();
+  // Memoize the store instance to prevent unnecessary re-renders
+  const notesStore = useMemo(() => NotesStore.getInstance(), []);
 
   useEffect(() => {
-    const filteredNotes = searchQuery || selectedCategory
-      ? notesStore.searchNotes(searchQuery, selectedCategory)
-      : notesStore.getAllNotes();
-    setNotes(filteredNotes);
-    setCategories(notesStore.getCategories());
-  }, [searchQuery, selectedCategory]);
+    const fetchNotes = () => {
+      const filteredNotes = searchQuery || selectedCategory
+        ? notesStore.searchNotes(searchQuery, selectedCategory)
+        : notesStore.getAllNotes();
+      setNotes(filteredNotes);
+      setCategories(notesStore.getCategories());
+    };
+
+    fetchNotes();
+  }, [searchQuery, selectedCategory, notesStore]);
 
   const handleCreateNote = (noteData: NoteFormData) => {
     notesStore.createNote(noteData);
