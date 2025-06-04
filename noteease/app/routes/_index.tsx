@@ -1,12 +1,10 @@
-import { useState } from "react";
-import { json } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
-import type { MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { useState, useEffect } from "react";
+import type { MetaFunction } from "@remix-run/node";
 import NoteCard from "~/components/NoteCard";
 import NoteForm from "~/components/NoteForm";
 import SearchBar from "~/components/SearchBar";
-import { getAllNotes, getCategories, searchNotes, createNote, updateNote, deleteNote } from "~/utils/notes.server";
-import type { Note } from "~/types/note";
+import { NotesStore } from "~/utils/notes.client";
+import type { Note, NoteFormData } from "~/types/note";
 
 export const meta: MetaFunction = () => {
   return [
@@ -15,38 +13,44 @@ export const meta: MetaFunction = () => {
   ];
 };
 
-export async function loader({ request }: LoaderFunctionArgs) {
-  const url = new URL(request.url);
-  const query = url.searchParams.get("q") || "";
-  const category = url.searchParams.get("category") || "";
-
-  const notes = query || category ? searchNotes(query, category) : getAllNotes();
-  const categories = getCategories();
-
-  return json({ notes, categories });
-}
-
 export default function Index() {
-  const { notes, categories } = useLoaderData<typeof loader>();
+  const [notes, setNotes] = useState<Note[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingNote, setEditingNote] = useState<Note | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
 
-  const handleCreateNote = async (noteData: NoteFormData) => {
-    await createNote(noteData);
+  const notesStore = NotesStore.getInstance();
+
+  useEffect(() => {
+    const filteredNotes = searchQuery || selectedCategory
+      ? notesStore.searchNotes(searchQuery, selectedCategory)
+      : notesStore.getAllNotes();
+    setNotes(filteredNotes);
+    setCategories(notesStore.getCategories());
+  }, [searchQuery, selectedCategory]);
+
+  const handleCreateNote = (noteData: NoteFormData) => {
+    notesStore.createNote(noteData);
+    setNotes(notesStore.getAllNotes());
+    setCategories(notesStore.getCategories());
     setIsFormOpen(false);
   };
 
-  const handleUpdateNote = async (noteData: NoteFormData) => {
+  const handleUpdateNote = (noteData: NoteFormData) => {
     if (editingNote) {
-      await updateNote(editingNote.id, noteData);
+      notesStore.updateNote(editingNote.id, noteData);
+      setNotes(notesStore.getAllNotes());
+      setCategories(notesStore.getCategories());
       setEditingNote(null);
     }
   };
 
-  const handleDeleteNote = async (id: string) => {
-    await deleteNote(id);
+  const handleDeleteNote = (id: string) => {
+    notesStore.deleteNote(id);
+    setNotes(notesStore.getAllNotes());
+    setCategories(notesStore.getCategories());
   };
 
   return (
