@@ -37,26 +37,53 @@ export default function NoteForm({ initialData, categories, onSubmit, onCancel }
         />
       </div>
 
-      <div>
+      <div className="relative">
         <label htmlFor="category" className="block text-sm font-medium text-gray-700">
           Category
         </label>
-        <div className="mt-1 flex rounded-md shadow-sm">
-          <select
-            id="category"
-            value={formData.category}
-            onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-            className="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-          >
-            <option value="">Select a category</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            ))}
-            <option value="new">+ Add new category</option>
-          </select>
-        </div>
+        <Combobox
+          value={formData.category}
+          onChange={(value) => setFormData({ ...formData, category: value })}
+        >
+          <div className="relative mt-1">
+            <Combobox.Input
+              className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              onChange={(event) => setFormData({ ...formData, category: event.target.value })}
+              displayValue={(category: string) => category}
+              placeholder="Select or type a category"
+            />
+            <Combobox.Button className="absolute inset-y-0 right-0 flex items-center pr-2">
+              <svg
+                className="h-5 w-5 text-gray-400"
+                viewBox="0 0 20 20"
+                fill="none"
+                stroke="currentColor"
+              >
+                <path
+                  d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Combobox.Button>
+            <Combobox.Options className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+              {categories.map((category) => (
+                <Combobox.Option
+                  key={category}
+                  value={category}
+                  className={({ active }) =>
+                    `relative cursor-default select-none py-2 pl-3 pr-9 ${
+                      active ? 'bg-blue-600 text-white' : 'text-gray-900'
+                    }`
+                  }
+                >
+                  {category}
+                </Combobox.Option>
+              ))}
+            </Combobox.Options>
+          </div>
+        </Combobox>
       </div>
 
       <div>
