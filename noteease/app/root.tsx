@@ -9,31 +9,16 @@ import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
 
-// Add global styles for our theme colors
-const themeStyles = `
+// Theme styles
+const themeStyles = document.createElement('style');
+themeStyles.textContent = `
   :root {
     --color-primary: #4A90E2;
     --color-secondary: #FFFFFF;
     --color-accent: #F5A623;
   }
 `;
-
-export const links: LinksFunction = () => [
-  { rel: "preconnect", href: "https://fonts.googleapis.com" },
-  {
-    rel: "preconnect",
-    href: "https://fonts.gstatic.com",
-    crossOrigin: "anonymous",
-  },
-  {
-    rel: "stylesheet",
-    href: "https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap",
-  },
-  {
-    rel: "stylesheet",
-    href: `data:text/css;base64,${btoa(themeStyles)}`,
-  },
-];
+document.head.appendChild(themeStyles);
 
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
