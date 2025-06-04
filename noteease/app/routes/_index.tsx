@@ -95,7 +95,7 @@ export default function Index() {
           {!isFormOpen && !editingNote && (
             <button
               onClick={() => setIsFormOpen(true)}
-              className="fixed bottom-8 right-8 bg-blue-600 text-white rounded-full p-4 shadow-lg hover:bg-blue-700 transition-colors"
+              className="fixed bottom-8 right-8 bg-primary-500 text-white rounded-full p-4 shadow-lg hover:bg-primary-600 transition-all duration-300 hover:shadow-xl hover:scale-110"
               aria-label="Add new note"
             >
               <svg

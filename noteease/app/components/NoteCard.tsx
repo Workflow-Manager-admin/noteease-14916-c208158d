@@ -8,7 +8,7 @@ interface NoteCardProps {
 
 export default function NoteCard({ note, onEdit, onDelete }: NoteCardProps) {
   return (
-    <div className="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 border border-gray-100">
+    <div className="group bg-white rounded-lg shadow-md p-6 hover:shadow-lg transition-all duration-300 border border-gray-100 hover:border-primary-200 hover:translate-y-[-2px]">
       <div className="flex justify-between items-start mb-3">
         <h3 className="text-xl font-semibold text-gray-800 group-hover:text-blue-600 transition-colors">
           {note.title}
