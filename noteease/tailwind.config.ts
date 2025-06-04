@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import formsPlugin from "@tailwindcss/forms";
 
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
@@ -47,7 +48,7 @@ export default {
     },
   },
   plugins: [
-    require('@tailwindcss/forms')({
+    formsPlugin({
       strategy: 'class',
     }),
   ],
