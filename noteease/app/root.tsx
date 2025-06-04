@@ -9,6 +9,15 @@ import type { LinksFunction } from "@remix-run/node";
 
 import "./tailwind.css";
 
+// Add global styles for our theme colors
+const globalStyles = `
+  :root {
+    --color-primary: #4A90E2;
+    --color-secondary: #FFFFFF;
+    --color-accent: #F5A623;
+  }
+`;
+
 export const links: LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
