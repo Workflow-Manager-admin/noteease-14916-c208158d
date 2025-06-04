@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Combobox } from "@headlessui/react";
 import type { Note, NoteFormData } from "~/types/note";
 
 interface NoteFormProps {
