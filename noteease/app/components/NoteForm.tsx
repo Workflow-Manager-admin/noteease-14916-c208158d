@@ -47,7 +47,7 @@ export default function NoteForm({ initialData, categories, onSubmit, onCancel }
         >
           <div className="relative mt-1">
             <Combobox.Input
-              className="w-full rounded-md border border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="form-input w-full rounded-md border-gray-300 bg-white py-2 pl-3 pr-10 shadow-sm focus:border-primary-500 focus:outline-none focus:ring-1 focus:ring-primary-500"
               onChange={(event) => setFormData({ ...formData, category: event.target.value })}
               displayValue={(category: string) => category}
               placeholder="Select or type a category"
@@ -74,7 +74,7 @@ export default function NoteForm({ initialData, categories, onSubmit, onCancel }
                   value={category}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-3 pr-9 ${
-                      active ? 'bg-blue-600 text-white' : 'text-gray-900'
+                      active ? 'bg-primary-500 text-white' : 'text-gray-900'
                     }`
                   }
                 >
@@ -95,7 +95,7 @@ export default function NoteForm({ initialData, categories, onSubmit, onCancel }
           rows={4}
           value={formData.content}
           onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-          className="form-input mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+          className="form-textarea mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 resize-none"
           required
         />
       </div>
@@ -104,13 +104,13 @@ export default function NoteForm({ initialData, categories, onSubmit, onCancel }
         <button
           type="button"
           onClick={onCancel}
-          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50"
+          className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 transition-colors duration-200"
         >
           Cancel
         </button>
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700"
+          className="px-4 py-2 text-sm font-medium text-white bg-primary-500 rounded-md hover:bg-primary-600 transition-colors duration-200"
         >
           {initialData ? "Update" : "Create"} Note
         </button>
